@@ -1,8 +1,9 @@
-import pandas as pd
-import numpy as np
-import re
 import math
 import os
+import re
+
+import numpy as np
+import pandas as pd
 from geopy.distance import vincenty
 
 

@@ -1,19 +1,20 @@
-import gmplot
-import pandas as pd
-import numpy as np
 import os
-from scipy import stats
+from statistics import mean, stdev
+
+import gmplot
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.ticker as ticker
-import seaborn as sns; sns.set(color_codes=True)
-from sklearn.model_selection import cross_validate, LeaveOneOut
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+import numpy as np
+import pandas as pd
+from matplotlib.colors import LinearSegmentedColormap
+from scipy import stats
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import LeaveOneOut, cross_validate
 from sklearn.svm import SVR
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from statistics import stdev, mean, median
+
+import seaborn as sns
+sns.set(color_codes=True)
 
 data_folder = 'Data'
 csv_file = 'schools_preprocessed.csv'
@@ -225,8 +226,8 @@ def scatter_2017_ratings():
 
 def plot_on_gmaps(latitudes, longitudes):
     '''
-    Plotting on Google Mapls with gmplot
-    gmplot might throw an IndexError, it is an open issue on
+    Plotting on Google Maps with gmplot.
+    Gmplot might throw an IndexError, it is an open issue on
     the GitHub page for gmplot.
     '''
     gmap = gmplot.GoogleMapPlotter.from_geocode("Toronto, Canada")
