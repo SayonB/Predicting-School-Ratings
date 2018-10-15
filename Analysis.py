@@ -1,8 +1,10 @@
 import gmplot
 import pandas as pd
 import numpy as np
+import os
 from scipy import stats
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.ticker as ticker
 import seaborn as sns; sns.set(color_codes=True)
 from sklearn.model_selection import cross_validate, LeaveOneOut
@@ -13,7 +15,10 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from statistics import stdev, mean, median
 
-df = pd.read_csv('schools_preprocessed.csv')
+data_folder = 'Data'
+csv_file = 'schools_preprocessed.csv'
+csv_file = os.path.join(data_folder, csv_file)
+df = pd.read_csv(csv_file)
 
 ratings = df['2017 RATING'].values
 
@@ -78,7 +83,7 @@ def baseline_metrics(ohe_df):
 # --------------------------------------------------------------------
 
 
-def correlation_matrix(ohe_df):
+def correlation_matrix(ohe_df, cmap_style='non_symmetric'):
     '''
     Correlation matrix is sorted by most correlated
     (absolute value so it does not matter if correlation is
@@ -105,8 +110,14 @@ def correlation_matrix(ohe_df):
     corr_sorted = abs(ohe_df.corr()['2017 Rating']).sort_values()
     ohe_df = ohe_df[list(corr_sorted.index)]
     corr = round(ohe_df.corr(), 2)
-
-    fig = sns.heatmap(corr, annot=True, cmap='Blues',
+    cmap = 'Blues'
+    if cmap_style == 'symmetric':
+        min_color = (0.5725490196, 0.76862745098, 0.87058823529, 1)
+        max_color = (0.03137254, 0.18823529411, 0.41960784313, 1)
+        cmap = LinearSegmentedColormap.from_list("", [max_color,
+                                                      min_color,
+                                                      max_color])
+    fig = sns.heatmap(corr, annot=True, cmap=cmap,
                       xticklabels=corr.columns.values,
                       yticklabels=corr.columns.values,
                       cbar=False)
