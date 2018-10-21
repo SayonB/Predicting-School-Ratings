@@ -190,12 +190,13 @@ def preprocess(text_files, school_database, cnsmpr_database,
     df = df[pd.notnull(df['2013 RATING'])]  # Step 10
     df.to_csv(output_csv, index=False)
 
-data_file_names = {
-    'files': ['Elementary Schools 2017.txt', 'Secondary Schools 2017.txt'],
-    'school_database': 'SCHOOL.xlsx',
-    'cnsmpr_database': 'DA_to_lat_long.csv',
-    'statscan_database': 'income_by_DA.csv',
-    'data_folder_name': 'Data'
-}
+if __name__ == '__main__':
+    data_file_names = {
+        'files': ['Elementary Schools 2017.txt', 'Secondary Schools 2017.txt'],
+        'school_database': 'SCHOOL.xlsx',
+        'cnsmpr_database': 'DA_to_lat_long.csv',
+        'statscan_database': 'income_by_DA.csv',
+        'data_folder_name': 'Data'
+    }
 
-preprocess(**data_file_names)
+    preprocess(**data_file_names)

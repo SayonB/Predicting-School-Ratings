@@ -84,7 +84,7 @@ def baseline_metrics(ohe_df):
 # --------------------------------------------------------------------
 
 
-def correlation_matrix(ohe_df, cmap_style='non_symmetric'):
+def correlation_matrix(ohe_df, cmap_style='symmetric'):
     '''
     Correlation matrix is sorted by most correlated
     (absolute value so it does not matter if correlation is
@@ -109,11 +109,11 @@ def correlation_matrix(ohe_df, cmap_style='non_symmetric'):
                                     '2016 RATING': '2016 Rating',
                                     '2017 RATING': '2017 Rating'})
     corr_sorted = abs(ohe_df.corr()['2017 Rating']).sort_values()
-    ohe_df = ohe_df[list(corr_sorted.index)]
-    corr = round(ohe_df.corr(), 2)
+    sorted_df = ohe_df[list(corr_sorted.index)]
+    corr = round(sorted_df.corr(), 2)
     cmap = 'Blues'
     if cmap_style == 'symmetric':
-        min_color = (0.5725490196, 0.76862745098, 0.87058823529, 1)
+        min_color = 'white'
         max_color = (0.03137254, 0.18823529411, 0.41960784313, 1)
         cmap = LinearSegmentedColormap.from_list("", [max_color,
                                                       min_color,
